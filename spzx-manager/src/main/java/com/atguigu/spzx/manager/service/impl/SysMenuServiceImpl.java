@@ -3,6 +3,7 @@ package com.atguigu.spzx.manager.service.impl;
 import com.atguigu.spzx.common.exp.SpzxGuiguException;
 import com.atguigu.spzx.manager.mapper.SysMenuMapper;
 import com.atguigu.spzx.manager.service.SysMenuService;
+import com.atguigu.spzx.model.dto.system.AssginMenuDto;
 import com.atguigu.spzx.model.entity.system.SysMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,18 @@ public class SysMenuServiceImpl implements SysMenuService {
         }
         // 2.逻辑删除
         sysMenuMapper.deleteById(menuId);
+    }
+
+    @Override
+    public void assignMenuForRole(AssginMenuDto assginMenuDto) {
+        // 1.从sys_role_menu 角色和菜单的关系表中，根据roleId删除关系数据（物理删除）
+        sysMenuMapper.deleteByRoleId(assginMenuDto.getRoleId());
+        // 2.重新建立该角色和多个菜单的对应关系
+        sysMenuMapper.doAssignRoleMenu(assginMenuDto);
+    }
+
+    @Override
+    public List<Long> findMenuIdListByRoleId(Long roleId) {
+        return sysMenuMapper.findMenuIdListByRoleId(roleId);
     }
 }

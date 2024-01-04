@@ -1,6 +1,7 @@
 package com.atguigu.spzx.manager.controller;
 
 import com.atguigu.spzx.manager.service.SysMenuService;
+import com.atguigu.spzx.model.dto.system.AssginMenuDto;
 import com.atguigu.spzx.model.entity.system.SysMenu;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
@@ -38,5 +39,19 @@ public class SysMenuController {
     public Result deleteMenu(@PathVariable Long menuId){
         sysMenuService.deleteMenu(menuId);
         return Result.build(null,ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "为角色分配菜单")
+    @PostMapping("/assignMenuForRole")
+    public Result assignMenuForRole(@RequestBody AssginMenuDto assginMenuDto){
+        sysMenuService.assignMenuForRole(assginMenuDto);
+        return Result.build(null,ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "根据角色id查询已分配的菜单id集合")
+    @GetMapping("/findMenuIdListByRoleId/{roleId}")
+    public Result findMenuIdListByRoleId(@PathVariable Long roleId){
+        List<Long> menuIdList = sysMenuService.findMenuIdListByRoleId(roleId);
+        return Result.build(menuIdList,ResultCodeEnum.SUCCESS);
     }
 }
