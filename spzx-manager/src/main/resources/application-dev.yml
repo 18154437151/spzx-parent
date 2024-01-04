@@ -1,0 +1,41 @@
+# 端口，应用名，数据库，mybatis参数(xml)，redis
+server:
+  port: 8501
+
+# 配置数据库连接信息
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.119.137:3306/db_spzx?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234
+  # Redis的相关配置
+  redis:
+    host: 192.168.119.137
+    port: 6379
+    timeout: 5000
+    password:
+
+# mybatis的配置
+mybatis:
+  config-location: classpath:/mybatis-config.xml
+  mapper-locations: classpath:/mapper/*/*.xml # 从resources下加载sql映射文件
+swagger:
+  enable: true
+
+# 自定义参数
+spzx:
+  auth:
+    list:
+      - /admin/system/index/login
+      - /admin/system/index/generateValidateCode
+      - /doc.html
+      - /webjars/**
+      - /favicon.ico
+      - /v3/api-docs/**
+  minio:
+    endpoint: http://192.168.119.137:9000
+    user: admin
+    password: admin123456
+    bucket: spzx-sysuser-avatar

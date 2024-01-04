@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  namespace:mapper接口的全限定类名  -->
+<mapper namespace="com.atguigu.spzx.manager.mapper.SysRoleMapper">
+    <!--  mybatis-plus（简单的单表sql不需要你写了，封装好了）  -->
+    <sql id="whereCondition">
+        <where>
+            <if test="roleName != null and roleName != ''">
+                and role_name like concat('%',#{roleName},'%')
+            </if>
+            and is_deleted = 0
+        </where>
+    </sql>
+    <select id="selectList" resultType="com.atguigu.spzx.model.entity.system.SysRole">
+        select * from sys_role <include refid="whereCondition"></include>
+    </select>
+    <select id="selectCountByRoleName" resultType="java.lang.Integer">
+        select count(1) from sys_role where role_name = #{roleName} and is_deleted = 0
+    </select>
+    <select id="selectCountByRoleCode" resultType="java.lang.Integer">
+        select count(1) from sys_role where role_code = #{roleCode} and is_deleted = 0
+    </select>
+    <insert id="addRole" parameterType="com.atguigu.spzx.model.entity.system.SysRole">
+        insert into sys_role (role_name,role_code,description) values (#{roleName},#{roleCode},#{description})
+    </insert>
+    <update id="updateById" parameterType="com.atguigu.spzx.model.entity.system.SysRole">
+        update sys_role set role_name = #{roleName},role_code = #{roleCode},description = #{description} where id = #{id} and is_deleted = 0
+    </update>
+    <select id="selectById" resultType="com.atguigu.spzx.model.entity.system.SysRole">
+        select * from sys_role where id = #{id} and is_deleted = 0
+    </select>
+    <update id="deleteById" parameterType="java.lang.Long">
+        update sys_role set is_deleted = 1 where id = #{roleId} and is_deleted = 0
+    </update>
+</mapper>

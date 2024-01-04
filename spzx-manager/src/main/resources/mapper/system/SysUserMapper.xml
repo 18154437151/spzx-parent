@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.spzx.manager.mapper.SysUserMapper">
+    <select id="findAll" resultType="com.atguigu.spzx.model.entity.system.SysUser">
+        select * from sys_user where is_deleted = 0
+    </select>
+    <select id="selectByUsername" resultType="com.atguigu.spzx.model.entity.system.SysUser">
+        select * from sys_user where username = #{userName} and is_deleted = 0
+    </select>
+    <sql id="whereCondition">
+        <where>
+            <if test="keyword != null and keyword != ''">
+                and (username like concat("%",#{keyword},"%") or name like concat("%",#{keyword},"%") or phone like concat("%",#{keyword},"%"))
+            </if>
+            <if test="createTimeBegin != null and createTimeBegin != ''">
+                and (create_time >= #{createTimeBegin}
+            </if>
+            <if test="createTimeEnd != null and createTimeEnd != ''">
+                and create_time &lt; #{createTimeEnd})
+            </if>
+            and is_deleted = 0
+        </where>
+    </sql>
+    <select id="findList" resultType="com.atguigu.spzx.model.entity.system.SysUser">
+        select * from sys_user <include refid="whereCondition"></include>
+    </select>
+    <select id="selectByPhone" resultType="java.lang.Integer">
+        select count(1) from sys_user where phone = #{phone}
+    </select>
+    <insert id="addSysUser">
+        insert into sys_user(username,password,name,phone,avatar,description,status)
+        values (#{userName},#{password},#{name},#{phone},#{avatar},#{description},#{status})
+    </insert>
+    <select id="selectById" resultType="com.atguigu.spzx.model.entity.system.SysUser">
+        select * from sys_user where id = #{id} and is_deleted = 0
+    </select>
+    <update id="updateById">
+        update sys_user set username=#{userName},name=#{name},phone=#{phone},avatar=#{avatar},description=#{description}
+        where id = #{id} and is_deleted = 0
+    </update>
+    <update id="deleteById">
+        update sys_user set is_deleted = 1 where id = #{id} and is_deleted = 0
+    </update>
+</mapper>
