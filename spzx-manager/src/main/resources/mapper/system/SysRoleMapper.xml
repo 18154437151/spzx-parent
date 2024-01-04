@@ -34,4 +34,10 @@
     <update id="deleteById" parameterType="java.lang.Long">
         update sys_role set is_deleted = 1 where id = #{roleId} and is_deleted = 0
     </update>
+    <select id="findRoleList" resultType="com.atguigu.spzx.model.entity.system.SysRole">
+        select * from sys_user where is_deleted = 0
+    </select>
+    <select id="getRoleIdListByUserId" resultType="java.lang.Long">
+        select role_id from sys_user_role where user_id = #{userId} and is_deleted = 0
+    </select>
 </mapper>

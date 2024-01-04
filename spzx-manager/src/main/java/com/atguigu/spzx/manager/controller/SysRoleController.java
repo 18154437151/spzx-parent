@@ -20,6 +20,20 @@ import java.util.List;
 public class SysRoleController {
     @Autowired
     private SysRoleService sysRoleService;
+
+    @Operation(summary = "查询角色列表")
+    @GetMapping("/findRoleList")
+    public Result finRoleList(){
+        List<SysRole> list = sysRoleService.findRoleList();
+        return Result.build(list,ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "查询当前用户已分配的角色id集合")
+    @GetMapping("/getRoleIdListByUserId/{userId}")
+    public Result getRoleIdListByUserId(@PathVariable Long userId){
+        List<Long> roleIdList = sysRoleService.getRoleIdListByUserId(userId);
+        return Result.build(roleIdList,ResultCodeEnum.SUCCESS);
+    }
     @Operation(summary = "删除角色")
     @DeleteMapping("/deleteRole/{roleId}")
     public Result deleteRole(@PathVariable Long roleId){

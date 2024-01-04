@@ -4,6 +4,8 @@ import com.atguigu.spzx.model.dto.system.SysRoleDto;
 import com.atguigu.spzx.model.entity.system.SysRole;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 public interface SysRoleService {
     PageInfo findByPage(Integer pageNum, Integer pageSize, SysRoleDto sysRoleDto);
 
@@ -12,4 +14,8 @@ public interface SysRoleService {
     void updateRole(SysRole sysRole);
 
     void deleteRole(Long roleId);
+
+    List<SysRole> findRoleList();
+
+    List<Long> getRoleIdListByUserId(Long userId);
 }

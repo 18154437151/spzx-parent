@@ -75,6 +75,16 @@ public class SysRoleServiceImpl implements SysRoleService {
     }
 
     @Override
+    public List<SysRole> findRoleList() {
+        return sysRoleMapper.findRoleList();
+    }
+
+    @Override
+    public List<Long> getRoleIdListByUserId(Long userId) {
+        return sysRoleMapper.getRoleIdListByUserId(userId);
+    }
+
+    @Override
     public void addRole(SysRole sysRole) {
         // 角色名称和角色编号不能为空
         String roleName = sysRole.getRoleName();
