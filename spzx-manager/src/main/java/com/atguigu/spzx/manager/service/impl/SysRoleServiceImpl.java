@@ -3,6 +3,7 @@ package com.atguigu.spzx.manager.service.impl;
 import com.atguigu.spzx.common.exp.SpzxGuiguException;
 import com.atguigu.spzx.manager.mapper.SysRoleMapper;
 import com.atguigu.spzx.manager.service.SysRoleService;
+import com.atguigu.spzx.model.dto.system.AssginRoleDto;
 import com.atguigu.spzx.model.dto.system.SysRoleDto;
 import com.atguigu.spzx.model.entity.system.SysRole;
 import com.github.pagehelper.PageHelper;
@@ -82,6 +83,22 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public List<Long> getRoleIdListByUserId(Long userId) {
         return sysRoleMapper.getRoleIdListByUserId(userId);
+    }
+
+    @Override
+    public void doAssign(AssginRoleDto assginRoleDto) {
+        // 1.先根据userId删除已分配的角色的关联数据
+        Long userId = assginRoleDto.getUserId();
+        sysRoleMapper.deleteByUserId(userId);
+        // 2.重新添加关联数据
+        // 逐行关系数据的建立，会执行多个insert
+        List<Long> roleIdList = assginRoleDto.getRoleIdList(); // 角色id集合
+//        for (Long roleId : roleIdList) {
+//            // insert into sys_user_role (role_id,user_id) values (?,?)
+//            sysRoleMapper.doAssign(roleId,userId);
+//        }
+        // 批量建立，只会执行一个insert
+        sysRoleMapper.batchDoAssign(assginRoleDto);
     }
 
     @Override

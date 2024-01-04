@@ -1,7 +1,10 @@
 package com.atguigu.spzx.manager;
 
+import com.atguigu.spzx.manager.mapper.SysRoleMapper;
 import com.atguigu.spzx.manager.mapper.SysUserMapper;
+import com.atguigu.spzx.manager.service.SysRoleService;
 import com.atguigu.spzx.manager.service.SysUserService;
+import com.atguigu.spzx.model.dto.system.AssginRoleDto;
 import com.atguigu.spzx.model.dto.system.SysUserDto;
 import com.atguigu.spzx.model.entity.system.SysUser;
 import io.minio.*;
@@ -13,6 +16,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 // 单元测试类所在的包，一定和启动类所在的包写成一样！！
 @SpringBootTest
@@ -23,6 +27,10 @@ public class ManagerTest {
     private SysUserService sysUserService;
     @Autowired
     private SysUserMapper sysUserMapper;
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
+    @Autowired
+    private SysRoleService sysRoleService;
     @Test
     public void test1(){
         redisTemplate.opsForValue().set("username","尚品甄选");
@@ -87,5 +95,14 @@ public class ManagerTest {
         } catch (Exception e) {
             System.out.println("Error occurred: " + e);
         }
+    }
+    @Test
+    public void test5(){
+        List<Long> roleIdList = Arrays.asList(1L, 5L, 9L);
+        Long userId = 100L;
+        AssginRoleDto assginRoleDto = new AssginRoleDto();
+        assginRoleDto.setUserId(userId);
+        assginRoleDto.setRoleIdList(roleIdList);
+        sysRoleService.doAssign(assginRoleDto);
     }
 }

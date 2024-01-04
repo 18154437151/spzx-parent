@@ -1,6 +1,7 @@
 package com.atguigu.spzx.manager.controller;
 
 import com.atguigu.spzx.manager.service.SysRoleService;
+import com.atguigu.spzx.model.dto.system.AssginRoleDto;
 import com.atguigu.spzx.model.dto.system.SysRoleDto;
 import com.atguigu.spzx.model.entity.system.SysRole;
 import com.atguigu.spzx.model.vo.common.Result;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Tag(name = "角色管理")
@@ -41,6 +43,20 @@ public class SysRoleController {
         return Result.build(null,ResultCodeEnum.SUCCESS);
     }
 
+    @GetMapping("/findRoleListAndRoleIdList/{userId}")
+    public Result findRoleListAndRoleIdList(@PathVariable Long userId){
+        List<Long> roleIdList = sysRoleService.getRoleIdListByUserId(userId);
+        List<SysRole> roleList = sysRoleService.findRoleList();
+        System.out.println("---------------------------------------");
+        System.out.println("roleIdList的内容为；" + roleIdList);
+        System.out.println("roleList的内容为：" + roleList);
+        System.out.println("--------------------------------------------------");
+        HashMap hashMap = new HashMap();
+        hashMap.put("roleIdList",roleIdList);
+        hashMap.put("roleList",roleList);
+        return Result.build(hashMap,ResultCodeEnum.SUCCESS);
+    }
+
     @Operation(summary = "查询角色列表")
     @PostMapping("/findByPage/{pageNum}/{pageSize}")
     public Result findByPage(@PathVariable Integer pageNum, @PathVariable Integer pageSize,@RequestBody SysRoleDto sysRoleDto){
@@ -62,4 +78,17 @@ public class SysRoleController {
         sysRoleService.updateRole(sysRole);
         return Result.build(null,ResultCodeEnum.SUCCESS);
     }
+
+    @Operation(summary = "为用户分配角色")
+    @PostMapping("/doAssign")
+    public Result doAssign(@RequestBody AssginRoleDto assginRoleDto){
+        sysRoleService.doAssign(assginRoleDto);
+        return Result.build(null,ResultCodeEnum.SUCCESS);
+    }
+
+//    @Operation(summary = "为用户分配角色")
+//    @PostMapping("/doAssign/{userId}")
+//    public Result doAssign(@RequestBody List<Long> roleIds,@PathVariable Long userId){
+//
+//    }
 }

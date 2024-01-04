@@ -27,6 +27,6 @@ public class SysMenu extends BaseEntity {
 
 	// 下级列表
 	@Schema(description = "子节点")
-	private List<SysMenu> children;
+	private List<SysMenu> children;  // 和前端的属性名一致
 
 }
