@@ -2,11 +2,13 @@ package com.atguigu.spzx.manager;
 
 import com.atguigu.spzx.manager.mapper.SysRoleMapper;
 import com.atguigu.spzx.manager.mapper.SysUserMapper;
+import com.atguigu.spzx.manager.service.SysMenuService;
 import com.atguigu.spzx.manager.service.SysRoleService;
 import com.atguigu.spzx.manager.service.SysUserService;
 import com.atguigu.spzx.model.dto.system.AssginRoleDto;
 import com.atguigu.spzx.model.dto.system.SysUserDto;
 import com.atguigu.spzx.model.entity.system.SysUser;
+import com.atguigu.spzx.model.vo.system.SysMenuVo;
 import io.minio.*;
 import io.minio.errors.MinioException;
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,8 @@ public class ManagerTest {
     private SysRoleMapper sysRoleMapper;
     @Autowired
     private SysRoleService sysRoleService;
+    @Autowired
+    private SysMenuService sysMenuService;
     @Test
     public void test1(){
         redisTemplate.opsForValue().set("username","尚品甄选");
@@ -104,5 +108,10 @@ public class ManagerTest {
         assginRoleDto.setUserId(userId);
         assginRoleDto.setRoleIdList(roleIdList);
         sysRoleService.doAssign(assginRoleDto);
+    }
+    @Test
+    public void test6(){
+        List<SysMenuVo> voList = sysMenuService.menus(6L,0L);
+        System.out.println(voList);
     }
 }

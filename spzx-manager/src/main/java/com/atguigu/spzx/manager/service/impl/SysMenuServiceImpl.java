@@ -5,9 +5,11 @@ import com.atguigu.spzx.manager.mapper.SysMenuMapper;
 import com.atguigu.spzx.manager.service.SysMenuService;
 import com.atguigu.spzx.model.dto.system.AssginMenuDto;
 import com.atguigu.spzx.model.entity.system.SysMenu;
+import com.atguigu.spzx.model.vo.system.SysMenuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -51,5 +53,44 @@ public class SysMenuServiceImpl implements SysMenuService {
     @Override
     public List<Long> findMenuIdListByRoleId(Long roleId) {
         return sysMenuMapper.findMenuIdListByRoleId(roleId);
+    }
+
+    @Override
+    public List<SysMenuVo> menus(Long userId, Long parentId) {
+        // 1.调用私有方法，返回一级菜单列表，此时的泛型SysMenu
+        List<SysMenu> sysMenuList = this.getSysMenuList(userId, parentId);
+        // 2.将List<SysMenu>泛型转成List<SysMenuVo>
+        List<SysMenuVo> sysMenuVoList = this.sysMenuToVo(sysMenuList);
+        return sysMenuVoList;
+    }
+
+    private List<SysMenuVo> sysMenuToVo(List<SysMenu> sysMenuList) {
+        List<SysMenuVo> sysMenuVoList = new ArrayList<>();
+        sysMenuList.forEach(sysMenu -> {
+            // 每个SysMenu转成SysMenuVo
+            SysMenuVo sysMenuVo = new SysMenuVo();
+            sysMenuVo.setTitle(sysMenu.getTitle());
+            sysMenuVo.setName(sysMenu.getComponent());
+            if (sysMenu.getChildren() != null && sysMenu.getChildren().size() > 0){
+                List<SysMenu> children = sysMenu.getChildren();
+                List<SysMenuVo> childrenVoList = this.sysMenuToVo(children);
+                sysMenuVo.setChildren(childrenVoList);
+            }else {
+                sysMenuVo.setChildren(null);
+            }
+            sysMenuVoList.add(sysMenuVo);
+        });
+        return sysMenuVoList;
+    }
+
+    /*
+    第一个私有方法：返回一级菜单列表，泛型SysMenu,每个菜单的下级一同查询到
+     */
+    private List<SysMenu> getSysMenuList(Long userId,Long parentId){
+        List<SysMenu> list = sysMenuMapper.menusByUserIdAndParentId(userId,parentId);
+        list.forEach(sysMenu -> {
+            sysMenu.setChildren(this.getSysMenuList(userId,sysMenu.getId()));
+        });
+        return list;
     }
 }

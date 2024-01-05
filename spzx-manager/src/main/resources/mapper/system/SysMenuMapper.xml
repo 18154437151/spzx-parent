@@ -25,4 +25,10 @@
     <select id="findMenuIdListByRoleId" resultType="java.lang.Long">
         select menu_id from sys_role_menu where role_id = #{roleId} and is_half = 0
     </select>
+    <select id="menusByUserIdAndParentId" resultType="com.atguigu.spzx.model.entity.system.SysMenu">
+        select distinct c.* from sys_user_role a
+                            inner join sys_role_menu b on a.role_id = b.role_id
+                            inner join sys_menu c on c.id = b.menu_id
+        WHERE a.user_id = #{userId} and c.parent_id = #{parentId} and c.is_deleted = 0
+    </select>
 </mapper>

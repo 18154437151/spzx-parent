@@ -1,10 +1,12 @@
 package com.atguigu.spzx.manager.controller;
 
+import com.atguigu.spzx.ThreadLocalUtil;
 import com.atguigu.spzx.manager.service.SysMenuService;
 import com.atguigu.spzx.model.dto.system.AssginMenuDto;
 import com.atguigu.spzx.model.entity.system.SysMenu;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
+import com.atguigu.spzx.model.vo.system.SysMenuVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +55,15 @@ public class SysMenuController {
     public Result findMenuIdListByRoleId(@PathVariable Long roleId){
         List<Long> menuIdList = sysMenuService.findMenuIdListByRoleId(roleId);
         return Result.build(menuIdList,ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "查询当前用户的菜单列表")
+    @GetMapping("/menus")
+    public Result menus(){
+        // 当前用户的id
+        Long userId = ThreadLocalUtil.get().getId();
+        // 一级菜单列表
+        List<SysMenuVo> menuList = sysMenuService.menus(userId,0L);
+        return Result.build(menuList,ResultCodeEnum.SUCCESS);
     }
 }
