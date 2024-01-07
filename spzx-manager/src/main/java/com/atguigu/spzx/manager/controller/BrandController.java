@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin/system/brand")
 @CrossOrigin
@@ -41,5 +43,12 @@ public class BrandController {
     public Result deleteById(@PathVariable Long id){
         brandService.deleteById(id);
         return Result.ok(null);
+    }
+
+    @Operation(summary = "查询所有的品牌（前端下拉框）")
+    @GetMapping("/findAll")
+    public Result findAll(){
+        List<Brand> list = brandService.findAll();
+        return Result.ok(list);
     }
 }

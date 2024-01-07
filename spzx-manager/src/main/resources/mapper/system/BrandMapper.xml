@@ -16,4 +16,7 @@
     <update id="deleteById">
         update brand set is_deleted = 1 where id = #{id}
     </update>
+    <select id="findAll">
+        select * from brand where is_deleted = 0
+    </select>
 </mapper>
