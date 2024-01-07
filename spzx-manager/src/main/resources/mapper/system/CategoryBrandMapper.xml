@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  namespace:mapper接口的全限定类名  -->
+<mapper namespace="com.atguigu.spzx.manager.mapper.CategoryBrandMapper">
+<select id="selectList" resultType="com.atguigu.spzx.model.entity.product.CategoryBrand">
+    select c.name as 'categoryName',b.name as 'brandName',b.logo,a.create_time from category_brand a
+                                                                                        inner join brand b on b.id = a.brand_id
+                                                                                        inner join category c on c.id = a.category_id
+    <include refid="whereCondition"></include>
+</select>
+    <sql id="whereCondition">
+        a.is_deleted = 0
+            <where>
+                <if test="brandId!=null and brandId!=''">
+                    and a.brand_id = #{brandId}
+                </if>
+                <if test="categoryId!=null and categoryId!=''">
+                    and a.category_id = #{categoryId}
+                </if>
+            </where>
+    </sql>
+</mapper>

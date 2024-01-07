@@ -11,6 +11,6 @@ public class CategoryBrandDto {
 	private Long brandId;
 
 	@Schema(description = "分类id")
-	private Long categoryId;
+	private Long categoryId;  // 第三级商品分类id
 
 }
