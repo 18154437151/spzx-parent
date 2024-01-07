@@ -5,7 +5,7 @@
 <!--  namespace:mapper接口的全限定类名  -->
 <mapper namespace="com.atguigu.spzx.manager.mapper.CategoryBrandMapper">
 <select id="selectList" resultType="com.atguigu.spzx.model.entity.product.CategoryBrand">
-    select c.name as 'categoryName',b.name as 'brandName',b.logo,a.create_time from category_brand a
+    select a.id,c.name as 'categoryName',b.name as 'brandName',b.logo,a.create_time from category_brand a
                                                                                         inner join brand b on b.id = a.brand_id
                                                                                         inner join category c on c.id = a.category_id
     <include refid="whereCondition"></include>
@@ -21,4 +21,16 @@
                 </if>
             </where>
     </sql>
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(1) from category_brand where category_id = #{categoryId} and brand_id = #{brandId} and is_deleted = 0
+    </select>
+    <insert id="addCategoryBrand">
+        insert into category_brand (brand_id,category_id) values (#{brandId},#{categoryId})
+    </insert>
+<!--    <update id="deleteById">-->
+<!--       delete from category_brand set is_deleted = 1 where id = #{id}-->
+<!--    </update>-->
+    <update id="deleteById">
+        update category_brand set is_deleted = 1 where id = #{id}
+    </update>
 </mapper>

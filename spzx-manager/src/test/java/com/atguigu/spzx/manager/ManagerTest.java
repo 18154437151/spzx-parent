@@ -1,11 +1,11 @@
 package com.atguigu.spzx.manager;
 
 import com.alibaba.excel.EasyExcel;
+import com.atguigu.spzx.manager.mapper.SysCategoryMapper;
 import com.atguigu.spzx.manager.mapper.SysRoleMapper;
 import com.atguigu.spzx.manager.mapper.SysUserMapper;
-import com.atguigu.spzx.manager.service.SysCategoryService;
-import com.atguigu.spzx.manager.service.SysRoleService;
-import com.atguigu.spzx.manager.service.SysUserService;
+import com.atguigu.spzx.manager.service.*;
+import com.atguigu.spzx.manager.service.impl.SysCategoryServiceImpl;
 import com.atguigu.spzx.model.dto.system.AssginRoleDto;
 import com.atguigu.spzx.model.dto.system.SysUserDto;
 import com.atguigu.spzx.model.entity.product.Category;
@@ -21,6 +21,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
 // 单元测试类所在的包，一定和启动类所在的包写成一样！！
 @SpringBootTest
 public class ManagerTest {
@@ -38,6 +40,12 @@ public class ManagerTest {
     private SysMenuService sysMenuService;
     @Autowired
     private SysCategoryService sysCategoryService;
+
+    @Autowired
+    private SysCategoryMapper sysCategoryMapper;
+
+    @Autowired
+    private CategoryBrandService categoryBrandService;
     @Test
     public void test1(){
         redisTemplate.opsForValue().set("username","尚品甄选");
@@ -142,5 +150,14 @@ public class ManagerTest {
         EasyExcel.read("C:\\Users\\Administrator\\Desktop\\学生列表.xslx",StudentExcelVo.class,new StudentReadListener())
                 .sheet("一班学生")  // 指定你要读取哪一个sheet表
                 .doRead();
+    }
+
+    @Test
+    public void test10(){
+//        Map idsByThreeId = sysCategoryMapper.getIdsByThreeId(162L);
+//        System.out.println(idsByThreeId);
+        List<Long> idList = categoryBrandService.getIdList(162L);
+        System.out.println(idList);
+
     }
 }

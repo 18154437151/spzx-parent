@@ -4,6 +4,7 @@ import com.atguigu.spzx.model.entity.product.Category;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface SysCategoryMapper {
@@ -16,4 +17,6 @@ public interface SysCategoryMapper {
     void addCategory(Category category);
 
     void batchAddCategory(List<Category> batchList);
+
+    Map<String,Long> getIdsByThreeId(Long threeId);
 }

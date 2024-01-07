@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin/system/categoryBrand")
 @CrossOrigin
@@ -22,5 +24,26 @@ public class CategoryBrandController {
     public Result findByPage(Integer pageNum, Integer pageSize, @RequestBody CategoryBrandDto categoryBrandDto){
         PageInfo pageInfo = categoryBrandService.findByPage(pageNum,pageSize,categoryBrandDto);
         return Result.ok(pageInfo);
+    }
+
+    @PostMapping("/addCategoryBrand")
+    @Operation(summary = "建立品牌和分类的关联数据")
+    public Result addCategoryBrand(@RequestBody CategoryBrandDto categoryBrandDto){
+        categoryBrandService.addCategoryBrand(categoryBrandDto);
+        return Result.ok(null);
+    }
+
+    @Operation(summary = "删除品牌和分类的关联数据")
+    @DeleteMapping("/deleteById/{id}")
+    public Result deleteById(@PathVariable Long id){
+        categoryBrandService.deleteById(id);
+        return Result.ok(null);
+    }
+
+    @Operation(summary = "根据第三级分类id查询id集合")
+    @GetMapping("/getIdList/{threeId}")
+    public Result getIdList(@PathVariable Long threeId){
+        List<Long> idList = categoryBrandService.getIdList(threeId);
+        return Result.ok(idList);
     }
 }

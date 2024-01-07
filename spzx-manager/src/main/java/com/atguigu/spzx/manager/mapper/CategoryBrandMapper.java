@@ -9,4 +9,10 @@ import java.util.List;
 @Mapper
 public interface CategoryBrandMapper {
     List<CategoryBrand> selectList(CategoryBrandDto categoryBrandDto);
+
+    Integer selectCount(CategoryBrandDto categoryBrandDto);
+
+    void addCategoryBrand(CategoryBrandDto categoryBrandDto);
+
+    void deleteById(Long id);
 }
