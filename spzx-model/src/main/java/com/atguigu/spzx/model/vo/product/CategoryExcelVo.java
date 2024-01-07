@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 
 //easyexcel组件
+// 每个商品分类只需要导出6属性
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--  namespace:mapper接口的全限定类名  -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace: mapper接口的全限定类名-->
 <mapper namespace="com.atguigu.spzx.manager.mapper.SysMenuMapper">
+
     <select id="findByParentId" resultType="com.atguigu.spzx.model.entity.system.SysMenu">
-        select * from sys_menu where parent_id = #{parentId} and is_deleted = 0 order by sort_value
+        SELECT * FROM `sys_menu` WHERE parent_id = #{parentId} and is_deleted = 0 order by  sort_value
     </select>
+
     <insert id="addMenu">
-        insert into sys_menu (parent_id,title,component,sort_value,status) values (#{parentId},#{title},#{component},#{sortValue},#{status})
+        INSERT INTO `sys_menu` (parent_id,title,component,sort_value,status) VALUE(#{parentId},#{title},#{component},#{sortValue},#{status})
     </insert>
-    <insert id="deleteById">
-        update sys_menu set is_deleted = 1 where id = #{menuId} and is_deleted = 0
-    </insert>
+
+    <update id="deleteById">
+        UPDATE `sys_menu` SET is_deleted = 1 WHERE id = #{menuId} AND is_deleted = 0
+    </update>
+
     <delete id="deleteByRoleId">
-        delete from sys_role_menu where role_id = #{roleId}
+        DELETE FROM `sys_role_menu` WHERE role_id = #{roleId}
     </delete>
-    <delete id="doAssignRoleMenu">
-        insert into sys_role_menu (role_id,menu_id,is_half) values 
-                                                                <foreach collection="menuIdList" item="item" separator=",">
-                                                                    (#{roleId},#{item.menuId},#{item.isHalf})
-                                                                </foreach>
-    </delete>
+
+    <insert id="doAssignRoleMenu">
+        INSERT INTO `sys_role_menu`(role_id,menu_id,is_half) VALUES
+        <foreach collection="menuIdList" item="item" separator=",">
+            (#{roleId},#{item.menuId},#{item.isHalf})
+        </foreach>
+    </insert>
+
     <select id="findMenuIdListByRoleId" resultType="java.lang.Long">
-        select menu_id from sys_role_menu where role_id = #{roleId} and is_half = 0
+        SELECT menu_id FROM `sys_role_menu` WHERE role_id = #{roleId} AND is_half = 0
     </select>
+
     <select id="menusByUserIdAndParentId" resultType="com.atguigu.spzx.model.entity.system.SysMenu">
-        select distinct c.* from sys_user_role a
-                            inner join sys_role_menu b on a.role_id = b.role_id
-                            inner join sys_menu c on c.id = b.menu_id
-        WHERE a.user_id = #{userId} and c.parent_id = #{parentId} and c.is_deleted = 0
+        SELECT DISTINCT c.* FROM `sys_user_role` a
+                                     INNER JOIN `sys_role_menu` b ON a.role_id = b.role_id
+                                     INNER JOIN `sys_menu` c ON c.id = b.menu_id
+        WHERE a.user_id = #{userId} AND c.parent_id = #{parentId}  AND c.is_deleted = 0
     </select>
 </mapper>

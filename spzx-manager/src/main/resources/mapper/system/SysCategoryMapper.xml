@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  namespace:mapper接口的全限定类名   -->
+<mapper namespace="com.atguigu.spzx.manager.mapper.SysCategoryMapper">
+    <select id="findByParentId" resultType="com.atguigu.spzx.model.entity.product.Category">
+        select * from category where parent_id = #{parentId} and status = 1 and is_deleted = 0 order by order_num
+    </select>
+    <select id="getCountByParentId" resultType="java.lang.Integer">
+        select count(1) from category WHERE parent_id = #{id} and is_deleted = 0
+    </select>
+    <select id="findAll" resultType="com.atguigu.spzx.model.entity.product.Category">
+        select * from category where is_deleted = 0
+    </select>
+    <insert id="addCategory">
+        insert into category (id,name,image_url,parent_id,status,order_num)
+        values (#{id},#{name},#{imageUrl},#{parentId},#{status},#{orderNum})
+    </insert>
+    <insert id="batchAddCategory">
+        insert into category (id,name,image_url,parent_id,status,order_num) values
+        <foreach collection="batchList" separator="," item="category">
+            (#{category.id},#{category.name},#{category.imageUrl},#{category.parentId},#{category.status},#{category.orderNum})
+        </foreach>
+    </insert>
+</mapper>

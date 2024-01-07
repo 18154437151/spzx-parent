@@ -1,16 +1,17 @@
 package com.atguigu.spzx.manager;
 
+import com.alibaba.excel.EasyExcel;
 import com.atguigu.spzx.manager.mapper.SysRoleMapper;
 import com.atguigu.spzx.manager.mapper.SysUserMapper;
-import com.atguigu.spzx.manager.service.SysMenuService;
+import com.atguigu.spzx.manager.service.SysCategoryService;
 import com.atguigu.spzx.manager.service.SysRoleService;
 import com.atguigu.spzx.manager.service.SysUserService;
 import com.atguigu.spzx.model.dto.system.AssginRoleDto;
 import com.atguigu.spzx.model.dto.system.SysUserDto;
+import com.atguigu.spzx.model.entity.product.Category;
 import com.atguigu.spzx.model.entity.system.SysUser;
 import com.atguigu.spzx.model.vo.system.SysMenuVo;
 import io.minio.*;
-import io.minio.errors.MinioException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,6 +36,8 @@ public class ManagerTest {
     private SysRoleService sysRoleService;
     @Autowired
     private SysMenuService sysMenuService;
+    @Autowired
+    private SysCategoryService sysCategoryService;
     @Test
     public void test1(){
         redisTemplate.opsForValue().set("username","尚品甄选");
@@ -113,5 +116,31 @@ public class ManagerTest {
     public void test6(){
         List<SysMenuVo> voList = sysMenuService.menus(6L,0L);
         System.out.println(voList);
+    }
+    @Test
+    public void test7(){
+        List<Category> byParentId = sysCategoryService.findByParentId(0L);
+        byParentId.forEach(category -> {
+            System.out.println(category);
+        });
+    }
+
+    // 创建exel文档，一个sheet表，三行数据
+    @Test
+    public void test8(){
+        StudentExcelVo studentExcelVo1 = new StudentExcelVo(101,"张三",20);
+        StudentExcelVo studentExcelVo2 = new StudentExcelVo(102,"李四",20);
+        StudentExcelVo studentExcelVo3 = new StudentExcelVo(103,"王五",50);
+        List<StudentExcelVo> data = Arrays.asList(studentExcelVo1,studentExcelVo2,studentExcelVo3);
+        EasyExcel.write("C:\\Users\\Administrator\\Desktop\\学生列表.xslx",StudentExcelVo.class)
+                .sheet("一班学生").doWrite(data);
+    }
+
+    @Test
+    public void test9(){
+        // 读取C:\Users\Administrator\Desktop\学生列表.xslx中的数据
+        EasyExcel.read("C:\\Users\\Administrator\\Desktop\\学生列表.xslx",StudentExcelVo.class,new StudentReadListener())
+                .sheet("一班学生")  // 指定你要读取哪一个sheet表
+                .doRead();
     }
 }

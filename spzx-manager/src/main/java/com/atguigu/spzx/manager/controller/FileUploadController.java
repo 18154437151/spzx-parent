@@ -20,7 +20,7 @@ public class FileUploadController {
 
     // 使用MultipartFile参数类型，接收前端的文件
     @PostMapping("/uploadFile")
-    @Operation(summary = "上传头像文件")
+    @Operation(summary = "上传图片文件")
     public Result uploadFile(MultipartFile file){
         String url = fileUploadService.upload(file);
         return Result.build(url, ResultCodeEnum.SUCCESS);

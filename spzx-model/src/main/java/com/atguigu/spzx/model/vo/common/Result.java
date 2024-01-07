@@ -38,5 +38,7 @@ public class Result<T> {
     public static <T> Result build(T data , ResultCodeEnum resultCodeEnum) {
         return build(data , resultCodeEnum.getCode() , resultCodeEnum.getMessage()) ;
     }
-
+    public static <T> Result ok(T data){
+        return build(data,ResultCodeEnum.SUCCESS);
+    }
 }
