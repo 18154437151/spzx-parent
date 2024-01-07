@@ -50,4 +50,27 @@ public class CategoryBrandServiceImpl implements CategoryBrandService {
         List<Long> idList = Arrays.asList(idsByThreeId.get("one"), idsByThreeId.get("two"), idsByThreeId.get("three"));
         return idList;
     }
+
+    @Override
+    public void updateCategoryBrand(CategoryBrand categoryBrand) {
+        // 1.非空校验
+        Long id = categoryBrand.getId();
+        Long brandId = categoryBrand.getBrandId();
+        Long categoryId = categoryBrand.getCategoryId();
+        // 2.根据id查询关系数据
+        CategoryBrand categoryBrandFromDB = categoryBrandMapper.getById(id);
+        if (categoryBrandFromDB.getBrandId()==brandId && categoryBrandFromDB.getCategoryId()==categoryId){
+            throw new SpzxGuiguException(201,"信息未修改");
+        }
+        // 3.判断关系数据是否重复（根据传递过来的brandId和categoryId去查询是否已经存在关系记录）
+        CategoryBrandDto categoryBrandDto = new CategoryBrandDto();
+        categoryBrandDto.setBrandId(brandId);
+        categoryBrandDto.setCategoryId(categoryId);
+        Integer integer = categoryBrandMapper.selectCount(categoryBrandDto);
+        if (integer > 0){
+            throw new SpzxGuiguException(201,"该关系数据已存在，请勿重复建立");
+        }
+        // 4.执行update更新语句
+        categoryBrandMapper.updateById(categoryBrand);
+    }
 }

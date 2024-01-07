@@ -2,6 +2,7 @@ package com.atguigu.spzx.manager.controller;
 
 import com.atguigu.spzx.manager.service.CategoryBrandService;
 import com.atguigu.spzx.model.dto.product.CategoryBrandDto;
+import com.atguigu.spzx.model.entity.product.CategoryBrand;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,5 +46,12 @@ public class CategoryBrandController {
     public Result getIdList(@PathVariable Long threeId){
         List<Long> idList = categoryBrandService.getIdList(threeId);
         return Result.ok(idList);
+    }
+
+    @Operation(summary = "修改当前品牌分类关系数据")
+    @PostMapping("/updateCategoryBrand")
+    public Result updateCategoryBrand(@RequestBody CategoryBrand categoryBrand){
+        categoryBrandService.updateCategoryBrand(categoryBrand);
+        return Result.ok(null);
     }
 }

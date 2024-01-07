@@ -33,4 +33,10 @@
     <update id="deleteById">
         update category_brand set is_deleted = 1 where id = #{id}
     </update>
+    <select id="getById" resultType="com.atguigu.spzx.model.entity.product.CategoryBrand">
+        select * from category_brand where id = #{id} and is_deleted = 0
+    </select>
+    <update id="updateById">
+        update category_brand set brand_id = #{brandId},category_id = #{categoryId} where id = #{id}
+    </update>
 </mapper>

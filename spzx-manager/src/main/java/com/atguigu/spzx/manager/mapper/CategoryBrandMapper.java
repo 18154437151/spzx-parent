@@ -15,4 +15,8 @@ public interface CategoryBrandMapper {
     void addCategoryBrand(CategoryBrandDto categoryBrandDto);
 
     void deleteById(Long id);
+
+    CategoryBrand getById(Long id);
+
+    void updateById(CategoryBrand categoryBrand);
 }
