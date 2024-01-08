@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  namespace:mapper接口的全限定类名  -->
+<mapper namespace="com.atguigu.spzx.manager.mapper.ProductSpecMapper">
+    <select id="findList" resultType="com.atguigu.spzx.model.entity.product.ProductSpec">
+        select * from product_spec where is_deleted = 0
+    </select>
+    <insert id="add">
+        insert into product_spec (spec_name,spec_value) values (#{specName},#{specValue})
+    </insert>
+</mapper>

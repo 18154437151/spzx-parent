@@ -3,6 +3,6 @@ spring:
     active: dev
   application:
     name: spzx-manager  # 为当前应用定义名称
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher

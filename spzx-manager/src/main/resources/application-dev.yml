@@ -11,18 +11,18 @@ spring:
     username: root
     password: 1234
   # Redis的相关配置
-  redis:
-    host: 192.168.119.137
-    port: 6379
-    timeout: 5000
-    password:
+  data:
+    redis:
+      host: 192.168.119.137
+      port: 6379
+      timeout: 5000
 
 # mybatis的配置
 mybatis:
   config-location: classpath:/mybatis-config.xml
   mapper-locations: classpath:/mapper/*/*.xml # 从resources下加载sql映射文件
-swagger:
-  enable: true
+#swagger:
+#  enable: true
 
 # 自定义参数
 spzx:

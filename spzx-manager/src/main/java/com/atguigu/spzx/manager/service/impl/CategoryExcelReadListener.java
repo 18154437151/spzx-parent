@@ -28,8 +28,8 @@ public class CategoryExcelReadListener extends AnalysisEventListener<CategoryExc
             sysCategoryMapper.batchAddCategory(batchList);
             batchList = ListUtils.newArrayListWithExpectedSize(10);  // 原来的集合会自动gc回收，释放空间
         }
-        System.out.println(categoryExcelVo);
-        sysCategoryMapper.addCategory(category);
+//        System.out.println(categoryExcelVo);
+//        sysCategoryMapper.addCategory(category);
 
     }
 

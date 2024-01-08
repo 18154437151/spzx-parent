@@ -15,6 +15,6 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")  // 允许携带所有的请求头，如果写成abc,表示只允许请求头中有一个abc,如果还有其他的请求头，则不再支持跨域
                 .allowCredentials(true)  // 是否允许携带cookie
                 .allowedMethods("*")  // 无论请求的类型是get或者post,put,delete...都允许跨域
-                .allowedOrigins("*");  // 允许前端所有的域
+                .allowedOriginPatterns("*");  // 允许前端所有的域
     }
 }
