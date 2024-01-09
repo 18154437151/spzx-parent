@@ -39,4 +39,10 @@
     <select id="deleteById">
         update product set is_deleted = 1 where id = #{productId}
     </select>
+    <update id="updateAuditStatus">
+        update product set auditStatus = #{auditStatus},audit_message = #{auditMessage} where id = #{productId} and is_deleted = 0
+    </update>
+    <update id="updateStatus">
+        update product set status = #{status} where id = #{productId} and is_deleted = 0
+    </update>
 </mapper>

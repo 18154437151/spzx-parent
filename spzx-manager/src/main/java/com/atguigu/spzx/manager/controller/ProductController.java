@@ -37,4 +37,18 @@ public class ProductController {
         productService.deleteById(productId);
         return Result.ok(null);
     }
+
+    @Operation(summary = "商品的审核")
+    @GetMapping("/updateAuditStatus/{productId}/{auditStatus}")
+    public Result updateAuditStatus(@PathVariable Long productId,@PathVariable Integer auditStatus){
+        productService.updateAuditStatus(productId,auditStatus);
+        return Result.ok(null);
+    }
+
+    @Operation(summary = "商品的审核")
+    @GetMapping("/updateStatus/{productId}/{status}")
+    public Result updateStatus(@PathVariable Long productId,@PathVariable Integer status){
+        productService.updateStatus(productId,status);
+        return Result.ok(null);
+    }
 }

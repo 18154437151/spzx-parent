@@ -1,5 +1,6 @@
 package com.atguigu.spzx.manager.service.impl;
 
+import com.atguigu.spzx.common.exp.SpzxGuiguException;
 import com.atguigu.spzx.manager.mapper.ProductDetailsMapper;
 import com.atguigu.spzx.manager.mapper.ProductMapper;
 import com.atguigu.spzx.manager.mapper.ProductSkuMapper;
@@ -57,5 +58,41 @@ public class ProductServiceImpl implements ProductService {
         productMapper.deleteById(productId);
         productSkuMapper.deleteByProductId(productId);
         productDetailsMapper.deleteByProductId(productId);
+    }
+
+    @Override
+    public void updateAuditStatus(Long productId, Integer auditStatus) {
+        // 1.取值范围的校验
+        if (auditStatus != 1 && auditStatus != -1){
+            throw new SpzxGuiguException(201,"审核状态取值范围不正确");
+        }
+        // 2.执行sql,update product set auditStatus = #{auditStatus} where id = #{productId} and is_deleted = 0
+        String auditMessage = auditStatus == 1?"审核通过":"审核未通过";
+        productMapper.updateAuditStatus(productId,auditStatus,auditMessage);
+    }
+
+    @Override
+    public void updateStatus(Long productId, Integer status) {
+        // 1.对于status的取值范围进行校验 [-1,1]
+        if (status != 1 && status != -1){
+            throw new SpzxGuiguException(201,"上下架状态的取值范围不正确");
+        }
+        // 2.如果当前spu未审核通过，则不允许上架,如果未审核通过，抛出异常，给出提示
+        // 根据productId查询Product对象，判断auditStatus是否等于1
+        Product product = productMapper.getById(productId);
+        if (product == null){
+            throw new SpzxGuiguException(201,"该商品不存在");
+        }
+        Integer auditStatus = product.getAuditStatus();
+        if (auditStatus != 1){
+            throw new SpzxGuiguException(201,"该商品未审核通过，不允许上下架");
+        }
+        // 3.判断是否重复操作，抛出异常，给出提示，如果已上架，再进行上架，就是重复操作
+        if (product.getStatus() == status){
+            throw new SpzxGuiguException(201,"该商品已" + (status == 1?"上架":"下架") + "，请勿重复操作");
+        }
+        // 4.spu审核通过，修改spu和多个sku的status 全部进行修改
+        productMapper.updateStatus(productId,status);
+        productSkuMapper.updateStatus(productId,status);
     }
 }

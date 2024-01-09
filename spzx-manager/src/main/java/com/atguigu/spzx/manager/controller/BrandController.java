@@ -51,4 +51,11 @@ public class BrandController {
         List<Brand> list = brandService.findAll();
         return Result.ok(list);
     }
+
+    @Operation(summary = "aaa")
+    @GetMapping("/findBrandListByCategoryId/{categoryId}")
+    public Result findBrandListByCategoryId(@PathVariable Long categoryId){
+        List<Brand> list = brandService.findBrandListByCategoryId(categoryId);
+        return Result.ok(list);
+    }
 }

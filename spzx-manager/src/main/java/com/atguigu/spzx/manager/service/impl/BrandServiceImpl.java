@@ -40,4 +40,9 @@ public class BrandServiceImpl implements BrandService {
     public List<Brand> findAll() {
         return brandMapper.findAll();
     }
+
+    @Override
+    public List<Brand> findBrandListByCategoryId(Long categoryId) {
+        return brandMapper.findBrandListByCategoryId(categoryId);
+    }
 }

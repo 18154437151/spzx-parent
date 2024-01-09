@@ -10,4 +10,8 @@ public interface ProductService {
     Product getByProductId(Long productId);
 
     void deleteById(Long productId);
+
+    void updateAuditStatus(Long productId, Integer auditStatus);
+
+    void updateStatus(Long productId, Integer status);
 }
