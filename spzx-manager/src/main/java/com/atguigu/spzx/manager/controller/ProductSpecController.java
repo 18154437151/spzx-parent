@@ -24,6 +24,8 @@ public class ProductSpecController {
         PageInfo pageInfo = productSpecService.findByPage(pageNum,pageSize);
         return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
     }
+
+    @Operation(summary = "规格添加")
     @PostMapping("/add")
     public Result add(@RequestBody ProductSpec productSpec){
         productSpecService.add(productSpec);

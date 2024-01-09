@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  namespace:mapper接口的全限定类名  -->
+<mapper namespace="com.atguigu.spzx.manager.mapper.ProductMapper">
+    <select id="findList" resultType="com.atguigu.spzx.model.entity.product.Product">
+        select b.name as 'brandName',c.name as 'category1Name',d.name as 'category2Name',e.name as 'category3Name',
+        a.* from product a inner join brand b on a.brand_id = b.id
+        inner join category c on a.category1_id = c.id
+        inner join category d on a.category2_id = d.id
+        inner join category e on a.category3_id = e.id
+    </select>
+    <sql id="whereCondition">
+        <where>
+            a.is_deleted = 0
+            <if test="brandId!=null and brandId != ''">
+                and a.brand_id = #{brandId}
+            </if>
+            <if test="category1Id!=null and category1Id != ''">
+                and a.category1_id = #{category1Id}
+            </if>
+            <if test="category2Id!=null and category2Id != ''">
+                and a.category2_id = #{category2Id}
+            </if>
+            <if test="category3Id!=null and category3Id != ''">
+                and a.category3_id = #{category3Id}
+            </if>
+        </where>
+    </sql>
+    <select id="getById" resultType="com.atguigu.spzx.model.entity.product.Product">
+        select b.name as 'brandName',c.name as 'category1Name',d.name as 'category2Name',e.name as 'category3Name',
+                a.* from product a inner join brand b on a.brand_id = b.id
+                                   inner join category c on a.category1_id = c.id
+                                   inner join category d on a.category2_id = d.id
+                                   inner join category e on a.category3_id = e.id
+        where a.is_deleted = 0 and a.id = #{productId}
+    </select>
+    <select id="deleteById">
+        update product set is_deleted = 1 where id = #{productId}
+    </select>
+</mapper>

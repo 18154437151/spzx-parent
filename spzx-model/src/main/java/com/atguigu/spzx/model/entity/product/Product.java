@@ -56,9 +56,10 @@ public class Product extends BaseEntity {
 	@Schema(description = "三级分类名称")
 	private String category3Name;			// 三级分类
 
+	// 附加属性：
 	@Schema(description = "sku列表集合")
 	private List<ProductSku> productSkuList;		// sku列表集合
-
+    // 当前spu对应的详情图列表（product_details中的image_urls）
 	@Schema(description = "图片详情列表")
 	private String detailsImageUrls;				// 图片详情列表
 

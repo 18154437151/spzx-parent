@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  namespace:mapper接口的全限定类名  -->
+<mapper namespace="com.atguigu.spzx.manager.mapper.OrderInfoMapper">
+<select id="getPreDateAmount" resultType="com.atguigu.spzx.model.entity.order.OrderStatistics">
+    select date(create_time) as 'orderDate',sum(total_amount) as 'totalAmount' from order_info where is_deleted = 0
+and date(create_time) = #{date} group by date(create_time)
+</select>
+</mapper>

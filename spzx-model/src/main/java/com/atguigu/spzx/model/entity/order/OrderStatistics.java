@@ -10,7 +10,7 @@ import java.util.Date;
 public class OrderStatistics extends BaseEntity {
 
     private Date orderDate;
-    private BigDecimal totalAmount;
+    private BigDecimal totalAmount;  // 金额，使用BigDecimal类型
     private Integer totalNum;
     
 }

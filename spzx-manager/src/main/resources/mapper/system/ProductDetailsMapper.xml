@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  namespace:mapper接口的全限定类名  -->
+<mapper namespace="com.atguigu.spzx.manager.mapper.ProductDetailsMapper">
+    <select id="getByProductId" resultType="com.atguigu.spzx.model.entity.product.ProductDetails">
+        select * from product_details where product_id = #{productId} and is_deleted = 0
+    </select>
+    <delete id="deleteByProductId">
+        update product_details set is_deleted = 1 where product_id = #{productId} and is_deleted = 0
+    </delete>
+</mapper>

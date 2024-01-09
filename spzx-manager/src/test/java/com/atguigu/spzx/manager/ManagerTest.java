@@ -1,17 +1,21 @@
 package com.atguigu.spzx.manager;
 
 import com.alibaba.excel.EasyExcel;
+import com.atguigu.spzx.manager.mapper.ProductDetailsMapper;
 import com.atguigu.spzx.manager.mapper.SysCategoryMapper;
 import com.atguigu.spzx.manager.mapper.SysRoleMapper;
 import com.atguigu.spzx.manager.mapper.SysUserMapper;
 import com.atguigu.spzx.manager.service.*;
-import com.atguigu.spzx.manager.service.impl.SysCategoryServiceImpl;
 import com.atguigu.spzx.model.dto.system.AssginRoleDto;
 import com.atguigu.spzx.model.dto.system.SysUserDto;
 import com.atguigu.spzx.model.entity.product.Category;
+import com.atguigu.spzx.model.entity.product.ProductDetails;
 import com.atguigu.spzx.model.entity.system.SysUser;
 import com.atguigu.spzx.model.vo.system.SysMenuVo;
-import io.minio.*;
+import io.minio.BucketExistsArgs;
+import io.minio.MakeBucketArgs;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +25,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 // 单元测试类所在的包，一定和启动类所在的包写成一样！！
 @SpringBootTest
@@ -46,6 +49,9 @@ public class ManagerTest {
 
     @Autowired
     private CategoryBrandService categoryBrandService;
+
+    @Autowired
+    private ProductDetailsMapper productDetailsMapper;
     @Test
     public void test1(){
         redisTemplate.opsForValue().set("username","尚品甄选");
@@ -159,5 +165,10 @@ public class ManagerTest {
         List<Long> idList = categoryBrandService.getIdList(162L);
         System.out.println(idList);
 
+    }
+    @Test
+    public void test11(){
+        ProductDetails byProductId = productDetailsMapper.getByProductId(1l);
+        System.out.println(byProductId);
     }
 }
