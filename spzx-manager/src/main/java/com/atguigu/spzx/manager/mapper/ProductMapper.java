@@ -18,4 +18,6 @@ public interface ProductMapper {
     void updateAuditStatus(@Param("productId") Long productId, @Param("auditStatus") Integer auditStatus,@Param("auditMessage") String auditMessage);
 
     void updateStatus(@Param("productId") Long productId, @Param("status") Integer status);
+
+    void add(Product product);
 }

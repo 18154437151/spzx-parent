@@ -10,4 +10,7 @@
     <delete id="deleteByProductId">
         update product_details set is_deleted = 1 where product_id = #{productId} and is_deleted = 0
     </delete>
+    <insert id="add">
+        insert into product_details (product_id,image_urls) values (#{productId},#{imageUrls})
+    </insert>
 </mapper>

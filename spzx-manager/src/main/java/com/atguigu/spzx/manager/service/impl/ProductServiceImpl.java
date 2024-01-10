@@ -8,13 +8,16 @@ import com.atguigu.spzx.manager.service.ProductService;
 import com.atguigu.spzx.model.dto.product.ProductDto;
 import com.atguigu.spzx.model.entity.product.Product;
 import com.atguigu.spzx.model.entity.product.ProductDetails;
+import com.atguigu.spzx.model.entity.product.ProductSku;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
@@ -94,5 +97,31 @@ public class ProductServiceImpl implements ProductService {
         // 4.spu审核通过，修改spu和多个sku的status 全部进行修改
         productMapper.updateStatus(productId,status);
         productSkuMapper.updateStatus(productId,status);
+    }
+
+    @Override
+    public void add(Product product) {
+        // 1.添加spu对象
+        product.setStatus(0);
+        product.setAuditStatus(0);
+        product.setAuditMessage("");
+        productMapper.add(product);
+        // 2.遍历添加sku对象
+        List<ProductSku> productSkuList = product.getProductSkuList();
+        for (int i = 0; i < productSkuList.size(); i++) {
+            ProductSku productSku = productSkuList.get(i);
+            productSku.setSkuCode(product.getId() + "_" + i);
+            productSku.setSkuName(product.getName() + " " + productSku.getSkuSpec());
+            productSku.setProductId(product.getId());
+            productSku.setSaleNum(0);
+            productSku.setStatus(0);
+            productSkuMapper.add(productSku);
+        }
+        // 3.添加详情
+        String detailsImageUrls = product.getDetailsImageUrls();
+        ProductDetails productDetails = new ProductDetails();
+        productDetails.setImageUrls(detailsImageUrls);
+        productDetails.setProductId(product.getId());
+        productDetailsMapper.add(productDetails);
     }
 }

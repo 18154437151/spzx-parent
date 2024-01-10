@@ -14,4 +14,6 @@ public interface ProductService {
     void updateAuditStatus(Long productId, Integer auditStatus);
 
     void updateStatus(Long productId, Integer status);
+
+    void add(Product product);
 }

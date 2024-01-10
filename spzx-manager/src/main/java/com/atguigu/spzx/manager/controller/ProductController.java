@@ -51,4 +51,11 @@ public class ProductController {
         productService.updateStatus(productId,status);
         return Result.ok(null);
     }
+
+    @Operation(summary = "添加商品")
+    @PostMapping("/add")
+    public Result add(@RequestBody Product product){
+        productService.add(product);
+        return Result.ok(null);
+    }
 }

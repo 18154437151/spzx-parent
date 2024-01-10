@@ -13,4 +13,10 @@
     <update id="updateStatus">
         update product_sku set status = #{status} where id = #{productId} and is_deleted = 0
     </update>
+    <insert id="add">
+        insert into product_sku (id,sku_code,sku_name,product_id,thumb_img,sale_price,market_price,cost_price,stock_num,
+        sku_spec,weight,volume,status,sale_num,create_time,update_time,is_deleted) values
+        (#{id},#{skuCode},#{skuName},#{productId},#{thumbImg},#{salePrice},#{marketPrice},#{costPrice},#{stockNum},
+        #{skuSpec},#{weight},#{volume},#{status},#{saleNum},#{createTime},#{updateTime},#{isDeleted})
+    </insert>
 </mapper>

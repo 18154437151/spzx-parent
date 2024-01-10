@@ -14,4 +14,6 @@ public interface ProductSkuMapper {
     void deleteByProductId(Long productId);
 
     void updateStatus(@Param("productId") Long productId,@Param("status") Integer status);
+
+    void add(ProductSku productSku);
 }

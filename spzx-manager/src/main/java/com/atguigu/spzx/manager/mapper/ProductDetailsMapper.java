@@ -8,4 +8,6 @@ public interface ProductDetailsMapper {
     ProductDetails getByProductId(Long productId);
 
     void deleteByProductId(Long productId);
+
+    void add(ProductDetails productDetails);
 }
