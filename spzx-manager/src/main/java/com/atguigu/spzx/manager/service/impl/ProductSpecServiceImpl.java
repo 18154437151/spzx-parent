@@ -25,4 +25,9 @@ public class ProductSpecServiceImpl implements ProductSpecService {
     public void add(ProductSpec productSpec) {
         productSpecMapper.add(productSpec);
     }
+
+    @Override
+    public List<ProductSpec> findAll() {
+        return productSpecMapper.findList();
+    }
 }

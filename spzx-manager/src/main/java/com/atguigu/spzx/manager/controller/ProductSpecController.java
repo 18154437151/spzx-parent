@@ -7,8 +7,11 @@ import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jdk.dynalink.linker.LinkerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -18,6 +21,12 @@ public class ProductSpecController {
     @Autowired
     private ProductSpecService productSpecService;
 
+    @Operation(summary = "查询所有的规格")
+    @GetMapping("/findAll")
+    public Result findAll(){
+        List<ProductSpec> list = productSpecService.findAll();
+        return Result.ok(list);
+    }
     @Operation(summary = "规格分页查询")
     @GetMapping("/findByPage/{pageNum}/{pageSize}")
     public Result findByPage(@PathVariable Integer pageNum,@PathVariable Integer pageSize){
