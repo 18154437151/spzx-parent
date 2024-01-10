@@ -1,5 +1,7 @@
 package com.atguigu.spzx.manager.controller;
 
+import com.atguigu.spzx.common.log.Log;
+import com.atguigu.spzx.common.log.OperatorType;
 import com.atguigu.spzx.manager.service.SysRoleService;
 import com.atguigu.spzx.model.dto.system.AssginRoleDto;
 import com.atguigu.spzx.model.dto.system.SysRoleDto;
@@ -57,10 +59,14 @@ public class SysRoleController {
         return Result.build(hashMap,ResultCodeEnum.SUCCESS);
     }
 
+    @Log(title = "角色管理：查询角色列表",businessType = 0,operatorType = OperatorType.MANAGE)
     @Operation(summary = "查询角色列表")
     @PostMapping("/findByPage/{pageNum}/{pageSize}")
     public Result findByPage(@PathVariable Integer pageNum, @PathVariable Integer pageSize,@RequestBody SysRoleDto sysRoleDto){
         PageInfo pageInfo = sysRoleService.findByPage(pageNum,pageSize,sysRoleDto);
+        if (pageNum == -1){
+            int i = 1/0;
+        }
 //        List list = pageInfo.getList(); // 当前页的结果集
 //        long total = pageInfo.getTotal();  // 总记录数
         return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
