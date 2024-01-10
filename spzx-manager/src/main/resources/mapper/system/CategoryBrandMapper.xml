@@ -5,14 +5,16 @@
 <!--  namespace:mapper接口的全限定类名  -->
 <mapper namespace="com.atguigu.spzx.manager.mapper.CategoryBrandMapper">
 <select id="selectList" resultType="com.atguigu.spzx.model.entity.product.CategoryBrand">
-    select a.id,c.name as 'categoryName',b.name as 'brandName',b.logo,a.create_time from category_brand a
-                                                                                        inner join brand b on b.id = a.brand_id
-                                                                                        inner join category c on c.id = a.category_id
+    select a.id,c.name as 'categoryName',b.name as 'brandName',b.logo,a.create_time,a.brand_id as brandId,
+    a.category_id as categoryId
+    from category_brand a
+    inner join brand b on b.id = a.brand_id
+    inner join category c on c.id = a.category_id
     <include refid="whereCondition"></include>
 </select>
     <sql id="whereCondition">
-        a.is_deleted = 0
             <where>
+                a.is_deleted = 0
                 <if test="brandId!=null and brandId!=''">
                     and a.brand_id = #{brandId}
                 </if>

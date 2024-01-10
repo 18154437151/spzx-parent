@@ -22,7 +22,7 @@ public class CategoryBrandController {
 
     @Operation(summary = "查询分类品牌列表")
     @PostMapping("/findByPage/{pageNum}/{pageSize}")
-    public Result findByPage(Integer pageNum, Integer pageSize, @RequestBody CategoryBrandDto categoryBrandDto){
+    public Result findByPage(@PathVariable Integer pageNum, @PathVariable Integer pageSize, @RequestBody(required = false) CategoryBrandDto categoryBrandDto){
         PageInfo pageInfo = categoryBrandService.findByPage(pageNum,pageSize,categoryBrandDto);
         return Result.ok(pageInfo);
     }

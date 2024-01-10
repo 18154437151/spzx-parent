@@ -3,6 +3,7 @@ package com.atguigu.spzx.manager.controller;
 import com.atguigu.spzx.manager.service.ProductUnitService;
 import com.atguigu.spzx.model.entity.base.ProductUnit;
 import com.atguigu.spzx.model.vo.common.Result;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +20,8 @@ import java.util.List;
 public class ProductUnitController {
     @Autowired
     private ProductUnitService productUnitService;
+
+    @Operation(summary = "查询所有的计量单位")
     @GetMapping("/findAll")
     public Result finAll(){
         List<ProductUnit> list = productUnitService.findAll();
