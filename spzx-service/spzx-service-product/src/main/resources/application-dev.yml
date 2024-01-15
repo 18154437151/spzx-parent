@@ -1,0 +1,19 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: spzx-service-product
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.119.137:3306/db_spzx?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+# mybatis的配置
+mybatis:
+  config-location: classpath:/mybatis-config.xml
+  mapper-locations: classpath:/mapper/*/*.xml # 从resources下加载sql映射文件

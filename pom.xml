@@ -12,6 +12,9 @@
         <module>spzx-model</module>
         <module>spzx-common</module>
         <module>spzx-manager</module>
+        <module>spzx-service</module>
+        <module>spzx-service-client</module>
+        <module>spzx-service-gateway</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -32,10 +35,30 @@
 
         <lombok.version>1.18.20</lombok.version>
         <mybatis.version>3.0.1</mybatis.version>
+        <spring-cloud.version>2022.0.2</spring-cloud.version>
+        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
     </properties>
     <dependencyManagement>
 
         <dependencies>
+            <!-- spring cloud的依赖 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- spring cloud alibaba的依赖 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- mybatis和spring boot整合的起步依赖 -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
