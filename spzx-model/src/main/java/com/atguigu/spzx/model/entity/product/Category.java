@@ -28,7 +28,7 @@ public class Category extends BaseEntity {
 	@Schema(description = "是否存在子节点")
 	private Boolean hasChildren;
 
-//	@Schema(description = "子节点List集合")
-//	private List<Category> children;
+	@Schema(description = "子节点List集合")
+	private List<Category> children;
 
 }

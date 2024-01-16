@@ -1,0 +1,27 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: spzx-service-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true  # 根据服务名进行负载均衡（路由中的uri参数的值可以写服务名）
+      routes:
+        - id: spzx-service-product
+          uri: lb://spzx-service-product
+          predicates:
+            - Path=/api/product/**
+      globalcors: # 网关中统一处理跨域（目标接口不需要@CrossOrigin）
+        cors-configurations:
+          '[/**]':
+            #  allowed-origins: "*"
+            allowedOriginPatterns: "*"
+            # 允许请求中携带的头信息
+            allowedHeaders: "*"
+            # 运行跨域的请求方式
+            allowedMethods: "*"

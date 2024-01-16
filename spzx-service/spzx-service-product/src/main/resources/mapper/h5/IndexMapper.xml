@@ -11,4 +11,10 @@
     <select id="getCategoryList" resultType="com.atguigu.spzx.model.entity.product.Category">
         select * from category where parent_id = 0 and is_deleted = 0 and status = 1
     </select>
+    <select id="findByParentId" resultType="com.atguigu.spzx.model.entity.product.Category">
+        select * from category where parentId = #{parentId} and is_deleted = 0 and status = 1
+    </select>
+    <select id="findAll" resultType="com.atguigu.spzx.model.entity.product.Category">
+        select * from category where is_deleted = 0 and status = 1
+    </select>
 </mapper>

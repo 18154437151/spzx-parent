@@ -11,4 +11,8 @@ public interface IndexMapper {
     List<ProductSku> getProductSkuList();
 
     List<Category> getCategoryList();
+
+    List<Category> findByParentId(long parentId);
+
+    List<Category> findAll();
 }
