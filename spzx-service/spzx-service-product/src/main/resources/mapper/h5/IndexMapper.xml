@@ -17,4 +17,7 @@
     <select id="findAll" resultType="com.atguigu.spzx.model.entity.product.Category">
         select * from category where is_deleted = 0 and status = 1
     </select>
+    <select id="findAllBrand" resultType="com.atguigu.spzx.model.entity.product.Brand">
+        select * from brand where is_deleted = 0
+    </select>
 </mapper>

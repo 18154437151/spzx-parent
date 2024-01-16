@@ -1,5 +1,6 @@
 package com.atguigu.spzx.h5.product.mapper;
 
+import com.atguigu.spzx.model.entity.product.Brand;
 import com.atguigu.spzx.model.entity.product.Category;
 import com.atguigu.spzx.model.entity.product.ProductSku;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,4 +16,6 @@ public interface IndexMapper {
     List<Category> findByParentId(long parentId);
 
     List<Category> findAll();
+
+    List<Brand> findAllBrand();
 }
